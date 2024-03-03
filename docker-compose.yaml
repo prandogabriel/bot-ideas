@@ -1,0 +1,29 @@
+version: '3.8'
+services:
+  app:
+    build: ./
+    container_name: app
+    restart: ${RESTART_POLICY}
+    environment:
+      - TZ
+      - MONGODB_URI
+      - MONGODB_DATABASE
+
+  mongodb:
+    image: bitnami/mongodb:${MONGO_IMAGE_TAG}
+    container_name: mongodb
+    restart: ${RESTART_POLICY}
+    environment:
+      - TZ
+      - MONGODB_USERNAME
+      - MONGODB_PASSWORD
+      - MONGODB_DATABASE
+      - MONGODB_ROOT_PASSWORD
+    volumes:
+      - mongodb_data:/bitnami/mongodb
+    ports:
+      - 27017:27017
+volumes:
+  mongodb_data:
+    driver: local
+    name: mongodb_data
